@@ -24,8 +24,10 @@
         <div class="title-area" style="flex:0 0 20%;">
           <h2 class="title-lexend text-orange-500 text-center">Agendamento de Aulas</h2>
         </div>
-        <div class="body-area flex-1 flex items-center justify-center">
+        <div class="body-area flex-1 flex items-center justify-center flex-col">
           <p class="text-comfortaa text-gray-700 text-center px-4">Aqui, texto de apresentação + instruções</p>
+          <!-- Imagem centralizada entre texto e botão -->
+          <img src="https://via.placeholder.com/150x100/FFA500/FFFFFF?text=Master+Educação" alt="Master Educação" class="my-6 rounded-lg shadow-md">
         </div>
         <div class="actions-area flex items-center justify-center mb-2">
           <button id="apresentacao-avancar" class="btn-orange">Avançar</button>
@@ -35,14 +37,14 @@
 
     <!-- SECTION 2: Verificação -->
     <section id="section-verificacao" class="section card-centered hidden">
-      <div class="card-inner flex flex-col h-full">
+      <div class="card-inner transition-all duration-300 ease-in-out" style="min-height: auto;">
         <p class="text-comfortaa text-center text-gray-800 mb-4">Texto de apresentação — redirecionamento para links</p>
 
         <button id="button-redirecionamento" class="btn-white-outline w-full mb-3">Minha primeira contratação</button>
         <button id="button-continuarContratacao" class="btn-orange w-full mb-3">Continuar agendamento de aulas</button>
 
-        <div id="cpf-area" class="hidden">
-          <input id="input-cpf" maxlength="14" placeholder="Digite seu CPF" class="w-full rounded-lg border px-3 py-2 text-comfortaa" />
+        <div id="cpf-area" class="expandable">
+          <input id="input-cpf" maxlength="14" placeholder="Digite seu CPF" class="w-full rounded-lg border px-3 py-2 text-comfortaa mt-3" />
         </div>
       </div>
     </section>
@@ -79,7 +81,7 @@
 
     <!-- SECTION 4: Seleção de Aulas -->
     <section id="section-selecaoAulas" class="section card-centered hidden">
-      <div class="card-inner flex flex-col h-full">
+      <div class="card-inner transition-all duration-500 ease-in-out flex flex-col pb-32" style="min-height: auto;">
         <h3 class="title-lexend text-orange-500 text-center mb-4">Selecione o tipo de agendamento</h3>
         
         <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
@@ -88,7 +90,7 @@
         </div>
 
         <!-- Aulas Padrão -->
-        <div id="aulas-padrao-content" class="hidden">
+        <div id="aulas-padrao-content" class="expandable">
           <div class="space-y-4">
             <select id="select-materia-padrao" class="w-full rounded-lg border px-3 py-2 text-comfortaa">
               <option value="">Selecione a matéria que iremos estudar</option>
@@ -106,14 +108,14 @@
         </div>
 
         <!-- Aulas Variadas -->
-        <div id="aulas-variadas-content" class="hidden">
-          <div id="aulas-variadas-container" class="space-y-4 mb-20"></div>
+        <div id="aulas-variadas-content" class="expandable flex-1 overflow-hidden">
+          <div id="aulas-variadas-container" class="space-y-4 overflow-y-auto h-full pr-2 pb-4" style="max-height: 60vh;"></div>
         </div>
 
         <!-- Botões fixos -->
-        <div id="botoes-fixos" class="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-lg hidden">
+        <div id="botoes-fixos" class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t p-4 shadow-lg z-40 transition-all duration-300 transform hidden">
           <div class="max-w-4xl mx-auto">
-            <div class="flex flex-wrap gap-2 justify-center mb-4">
+            <div id="botoes-repeticao" class="flex flex-wrap gap-2 justify-center mb-4 hidden">
               <button id="btn-repetir-horario" class="btn-white text-sm">Repetir horário</button>
               <button id="btn-repetir-disciplinas" class="btn-white text-sm">Repetir Disciplinas</button>
               <button id="btn-repetir-duracao" class="btn-white text-sm">Repetir Duração</button>
@@ -159,18 +161,18 @@
 
     <!-- SECTION 6: Confirmação da Equipe -->
     <section id="section-confirmacaoEquipe" class="section card-centered hidden px-4 py-6">
-      <div class="card-inner">
+      <div class="card-inner transition-all duration-300 ease-in-out" style="min-height: auto;">
         <p class="text-comfortaa text-gray-800 text-center mb-4">Gostaria de manter os últimos professores do seu último atendimento?</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center mb-4">
           <button id="sem-preferencia" class="btn-white shadow">Não tenho preferência de professores</button>
           <button id="manter-professores" class="btn-white shadow">Sim, gostaria de repetir os professores</button>
         </div>
 
-        <div id="professores-info" class="hidden mb-4 text-center text-sm text-gray-600">
+        <div id="professores-info" class="expandable mb-4 text-center text-sm text-gray-600">
           <p>Estes são os professores que ensinaram <strong>Amora</strong>.<br>Clique em avançar para mantermos os professores ou clicar no x para trocar algum professor específico.</p>
         </div>
 
-        <div id="professores-lista" class="bg-white rounded-xl shadow p-4 hidden">
+        <div id="professores-lista" class="expandable bg-white rounded-xl shadow p-4">
           <div id="professores-columns" class="flex flex-col gap-2"></div>
         </div>
 
@@ -183,10 +185,23 @@
 
     <!-- SECTION 7: Seleção de Aulas Confirmação -->
     <section id="section-selecaoAulasConfirmacao" class="section card-centered hidden px-4 py-6">
-      <div class="card-inner">
+      <div class="card-inner w-full">
         <h3 class="title-lexend text-orange-500 text-center mb-4">Confirmação das Aulas e Professores</h3>
         
-        <div id="aulas-confirmacao-container" class="space-y-4 mb-6"></div>
+        <div class="table-container bg-white rounded-xl shadow p-4 overflow-auto">
+          <table id="tabela-confirmacao-aulas" class="w-full table-auto border-collapse">
+            <thead>
+              <tr class="bg-orange-500 text-white">
+                <th class="p-2">Data</th>
+                <th class="p-2">Hora de Início</th>
+                <th class="p-2">Duração</th>
+                <th class="p-2">Matéria</th>
+                <th class="p-2">Professor</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-corpo-aulas" class="text-center"></tbody>
+          </table>
+        </div>
 
         <div class="flex gap-4 justify-center mt-6">
           <button id="confirmacao-aulas-voltar" class="btn-white">Voltar</button>
@@ -198,10 +213,17 @@
     <!-- SECTION 8: Termos -->
     <section id="section-termos" class="section card-centered hidden px-4 py-6">
       <div class="card-inner">
+        <!-- Imagem centralizada acima das checkboxes -->
+        <img src="https://via.placeholder.com/150x100/FFA500/FFFFFF?text=Termos+de+Uso" alt="Termos de Uso" class="mx-auto mb-6 rounded-lg shadow-md">
+        
         <label class="flex items-center gap-2">
           <input type="checkbox" id="termo-uso" />
           <a href="https://google.com" target="_blank" class="text-orange-500">Estou de acordo com os termos de uso</a>
         </label>
+        
+        <!-- Imagem antes da segunda label -->
+        <img src="https://via.placeholder.com/150x100/FFA500/FFFFFF?text=Privacidade" alt="Privacidade" class="mx-auto my-4 rounded-lg shadow-md">
+        
         <label class="flex items-center gap-2 mt-3">
           <input type="checkbox" id="termo-privacidade" />
           <a href="https://google.com.br" target="_blank" class="text-orange-500">Estou de acordo com a privacidade</a>

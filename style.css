@@ -27,6 +27,7 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   padding: 24px;
   min-height: 40vh;
+  transition: all 0.5s ease-in-out;
 }
 
 .title-lexend {
@@ -187,11 +188,89 @@ body {
 /* -------------------- BOTÕES FIXOS -------------------- */
 #botoes-fixos {
   z-index: 40;
+  backdrop-filter: blur(8px);
 }
 
 /* -------------------- MODAL -------------------- */
 #modal-repeticao {
   z-index: 50;
+}
+
+/* -------------------- ANIMAÇÕES DE EXPANSÃO -------------------- */
+.expandable {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.expandable.expanded {
+  max-height: 1000px; /* Ajuste conforme necessário */
+  opacity: 1;
+}
+
+/* -------------------- SCROLL PERSONALIZADO -------------------- */
+#aulas-variadas-container {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+#aulas-variadas-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+#aulas-variadas-container::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 3px;
+}
+
+#aulas-variadas-container::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 3px;
+}
+
+#aulas-variadas-container::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
+
+/* -------------------- ANIMAÇÕES DE BOTÕES -------------------- */
+#botoes-repeticao {
+  transition: all 0.3s ease-in-out;
+}
+
+#botoes-repeticao.show {
+  display: flex;
+  animation: slideUp 0.3s ease-out;
+}
+
+#botoes-repeticao.hide {
+  animation: slideDown 0.3s ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+    display: none;
+  }
 }
 
 /* -------------------- RESPONSIVIDADE -------------------- */
@@ -214,5 +293,9 @@ body {
   #botoes-fixos .btn-white {
     padding: 8px 12px;
     font-size: 0.8rem;
+  }
+
+  #aulas-variadas-container {
+    max-height: 50vh;
   }
 }

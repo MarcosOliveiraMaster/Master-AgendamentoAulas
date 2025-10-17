@@ -25,21 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedDays: [],
     currentMonth: new Date(),
     aulas: [],
+    // Variáveis para professores - serão importadas do banco de dados futuramente
+    professoresDB: [
+      { nome: "José Welligton", materia: "Matemática" },
+      { nome: "Eden Pereira", materia: "Física" },
+      { nome: "Lucas Gabriel", materia: "Química" },
+      { nome: "Noemi de Castro", materia: "Biologia" },
+      { nome: "Thuane Barbosa", materia: "História" },
+      { nome: "Carlos Silva", materia: "Geografia" },
+      { nome: "Ana Paula", materia: "Língua Portuguesa" },
+      { nome: "Roberto Alves", materia: "Língua Inglesa" },
+      { nome: "Mariana Costa", materia: "Filosofia" },
+      { nome: "Pedro Santos", materia: "Sociologia" },
+      { nome: "Fernanda Lima", materia: "Ciências" },
+      { nome: "Ricardo Oliveira", materia: "Pedagogia" }
+    ],
     materias: [
       "Biologia", "Ciências", "Filosofia", "Física", "Geografia",
       "História", "Língua Portuguesa", "Língua Inglesa", "Matemática", 
       "Química", "Sociologia", "Pedagogia"
     ].sort(),
-    professores: [
-      { nome: "José Welligton", materia: "Matemática" },
-      { nome: "Eden Pereira", materia: "Física" },
-      { nome: "Lucas Gabriel", materia: "Química" },
-      { nome: "Noemi de Castro", materia: "Biologia" },
-      { nome: "Thuane Barbosa", materia: "História" }
-    ],
     tipoAgendamento: null, // 'padrao' ou 'variadas'
-    manterProfessores: false,
-    professoresSelecionados: []
+    manterProfessores: false
   };
 
   // Navegação entre seções
@@ -160,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const contentPadrao = document.getElementById("aulas-padrao-content");
     const contentVariadas = document.getElementById("aulas-variadas-content");
     const btnAvancar = document.getElementById("selecao-avancar");
+    const botoesRepeticao = document.getElementById("botoes-repeticao");
     
     // Popular matéria padrão
     const selectMateriaPadrao = document.getElementById("select-materia-padrao");
@@ -174,27 +182,51 @@ document.addEventListener("DOMContentLoaded", () => {
     // Resetar estado
     btnAulasPadrao.classList.remove("bg-orange-500", "text-white");
     btnAulasVariadas.classList.remove("bg-orange-500", "text-white");
-    contentPadrao.classList.add("hidden");
-    contentVariadas.classList.add("hidden");
+    contentPadrao.classList.remove("expanded");
+    contentVariadas.classList.remove("expanded");
+    botoesRepeticao.classList.add("hidden");
     btnAvancar.disabled = true;
     state.tipoAgendamento = null;
 
     btnAulasPadrao.addEventListener("click", () => {
       btnAulasPadrao.classList.add("bg-orange-500", "text-white");
       btnAulasVariadas.classList.remove("bg-orange-500", "text-white");
-      contentPadrao.classList.remove("hidden");
-      contentVariadas.classList.add("hidden");
+      contentPadrao.classList.add("expanded");
+      contentVariadas.classList.remove("expanded");
+      
+      // Ocultar botões de repetição com animação
+      botoesRepeticao.classList.remove("show");
+      botoesRepeticao.classList.add("hide");
+      setTimeout(() => {
+        botoesRepeticao.classList.add("hidden");
+      }, 300);
+      
       state.tipoAgendamento = 'padrao';
       verificarCamposPreenchidos();
+      
+      // Ajustar altura da seção
+      setTimeout(() => {
+        ajustarAlturaSelecaoAulas();
+      }, 500);
     });
 
     btnAulasVariadas.addEventListener("click", () => {
       btnAulasVariadas.classList.add("bg-orange-500", "text-white");
       btnAulasPadrao.classList.remove("bg-orange-500", "text-white");
-      contentVariadas.classList.remove("hidden");
-      contentPadrao.classList.add("hidden");
+      contentVariadas.classList.add("expanded");
+      contentPadrao.classList.remove("expanded");
+      
+      // Mostrar botões de repetição com animação
+      botoesRepeticao.classList.remove("hide", "hidden");
+      botoesRepeticao.classList.add("show");
+      
       state.tipoAgendamento = 'variadas';
       renderAulasVariadas();
+      
+      // Ajustar altura da seção
+      setTimeout(() => {
+        ajustarAlturaSelecaoAulas();
+      }, 500);
     });
 
     // Adicionar eventos para verificar campos
@@ -208,11 +240,23 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-repetir-duracao").addEventListener("click", () => mostrarModal('duracao'));
   }
 
+  // Ajustar altura da seção de seleção de aulas
+  function ajustarAlturaSelecaoAulas() {
+    const cardInner = document.querySelector("#section-selecaoAulas .card-inner");
+    const contentHeight = cardInner.scrollHeight;
+    
+    // Definir altura mínima baseada no conteúdo
+    if (contentHeight > 400) {
+      cardInner.style.minHeight = "auto";
+      cardInner.style.height = "auto";
+    }
+  }
+
   function mostrarModal(tipo) {
     const mensagens = {
-      horario: { titulo: "Repetir Horário", mensagem: "mensagem 01" },
-      disciplinas: { titulo: "Repetir Disciplinas", mensagem: "mensagem 02" },
-      duracao: { titulo: "Repetir Duração", mensagem: "mensagem 03" }
+      horario: { titulo: "Repetir Horário", mensagem: "Esta ação irá replicar o mesmo horário para todas as aulas selecionadas." },
+      disciplinas: { titulo: "Repetir Disciplinas", mensagem: "Esta ação irá aplicar a mesma disciplina para todas as aulas selecionadas." },
+      duracao: { titulo: "Repetir Duração", mensagem: "Esta ação irá definir a mesma duração para todas as aulas selecionadas." }
     };
     
     modalTitulo.textContent = mensagens[tipo].titulo;
@@ -295,6 +339,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     verificarCamposPreenchidos();
+    
+    // Ajustar scroll automaticamente
+    setTimeout(() => {
+      container.scrollTop = 0;
+    }, 100);
   }
 
   function repetirHorario() {
@@ -324,6 +373,63 @@ document.addEventListener("DOMContentLoaded", () => {
     verificarCamposPreenchidos();
   }
 
+  // Processar dados das aulas
+  function processarAulas() {
+    state.aulas = [];
+    
+    const aulasPadraoContent = document.getElementById("aulas-padrao-content");
+    
+    if (aulasPadraoContent.classList.contains("expanded")) {
+      // Aulas Padrão
+      const materia = document.getElementById("select-materia-padrao").value;
+      const horario = document.getElementById("input-horario-padrao").value;
+      const duracao = document.getElementById("select-duracao-padrao").value;
+      
+      if (materia && horario && duracao) {
+        state.selectedDays.sort((a, b) => a - b).forEach(day => {
+          // Encontrar professor correspondente à matéria
+          const professor = state.manterProfessores ? 
+            (state.professoresDB.find(p => p.materia === materia)?.nome || "A definir") : 
+            "A definir";
+            
+          state.aulas.push({
+            data: day,
+            materia: materia,
+            horario: horario,
+            duracao: duracao,
+            professor: professor
+          });
+        });
+      }
+    } else {
+      // Aulas Variadas
+      state.selectedDays.sort((a, b) => a - b).forEach((day, index) => {
+        const materiaElement = document.querySelector(`.select-materia[data-index="${index}"]`);
+        const horarioElement = document.querySelector(`.input-horario[data-index="${index}"]`);
+        const duracaoElement = document.querySelector(`.select-duracao[data-index="${index}"]`);
+        
+        const materia = materiaElement ? materiaElement.value : '';
+        const horario = horarioElement ? horarioElement.value : '';
+        const duracao = duracaoElement ? duracaoElement.value : '';
+        
+        if (materia && horario && duracao) {
+          // Encontrar professor correspondente à matéria
+          const professor = state.manterProfessores ? 
+            (state.professoresDB.find(p => p.materia === materia)?.nome || "A definir") : 
+            "A definir";
+          
+          state.aulas.push({
+            data: day,
+            materia: materia,
+            horario: horario,
+            duracao: duracao,
+            professor: professor
+          });
+        }
+      });
+    }
+  }
+
   // Preencher tabela de confirmação
   function fillConfirmationTable() {
     const tbody = document.getElementById("tabela-corpo");
@@ -341,6 +447,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Preencher tabela de confirmação de aulas com professores
+  function fillAulasConfirmacaoTable() {
+    const tbody = document.getElementById("tabela-corpo-aulas");
+    tbody.innerHTML = '';
+
+    state.aulas.forEach(aula => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="p-2">${formatDate(aula.data)}</td>
+        <td class="p-2">${aula.horario || '--'}</td>
+        <td class="p-2">${aula.duracao || '--'}</td>
+        <td class="p-2">${aula.materia || '--'}</td>
+        <td class="p-2">${aula.professor || '--'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
   // Configurar professores
   function setupProfessores() {
     const btnSemPref = document.getElementById("sem-preferencia");
@@ -352,16 +476,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Resetar estado
     btnSemPref.classList.remove("bg-orange-500", "text-white");
     btnManter.classList.remove("bg-orange-500", "text-white");
-    lista.classList.add("hidden");
-    info.classList.add("hidden");
+    lista.classList.remove("expanded");
+    info.classList.remove("expanded");
     btnAvancar.disabled = true;
     state.manterProfessores = false;
 
     btnSemPref.addEventListener('click', () => {
       btnSemPref.classList.add('bg-orange-500', 'text-white');
       btnManter.classList.remove('bg-orange-500', 'text-white');
-      lista.classList.add('hidden');
-      info.classList.add('hidden');
+      lista.classList.remove("expanded");
+      info.classList.remove("expanded");
       state.manterProfessores = false;
       btnAvancar.disabled = false;
     });
@@ -369,8 +493,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btnManter.addEventListener('click', () => {
       btnManter.classList.add('bg-orange-500', 'text-white');
       btnSemPref.classList.remove('bg-orange-500', 'text-white');
-      lista.classList.remove('hidden');
-      info.classList.remove('hidden');
+      lista.classList.add("expanded");
+      info.classList.add("expanded");
       state.manterProfessores = true;
       btnAvancar.disabled = false;
       renderProfessores();
@@ -381,7 +505,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("professores-columns");
     container.innerHTML = '';
     
-    state.professores.forEach(prof => {
+    // Obter lista de matérias únicas selecionadas
+    const materiasSelecionadas = [...new Set(state.aulas.map(aula => aula.materia))];
+    
+    // Filtrar professores apenas pelas matérias selecionadas
+    const professoresFiltrados = state.professoresDB.filter(prof => 
+      materiasSelecionadas.includes(prof.materia)
+    );
+    
+    professoresFiltrados.forEach(prof => {
       const div = document.createElement('div');
       div.className = 'flex justify-between items-center border-b border-gray-200 pb-1';
       div.innerHTML = `
@@ -391,6 +523,10 @@ document.addEventListener("DOMContentLoaded", () => {
       
       div.querySelector('.remover-professor').addEventListener('click', () => {
         div.remove();
+        // Atualizar state.professoresDB removendo o professor
+        state.professoresDB = state.professoresDB.filter(p => 
+          !(p.materia === prof.materia && p.nome === prof.nome)
+        );
       });
       
       container.appendChild(div);
@@ -409,71 +545,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     termoUso.addEventListener('change', updateButtonState);
     termoPriv.addEventListener('change', updateButtonState);
-  }
-
-  // Processar dados das aulas
-  function processarAulas() {
-    state.aulas = [];
-    
-    // Verificar qual tipo de agendamento está ativo
-    const aulasPadraoContent = document.getElementById("aulas-padrao-content");
-    
-    if (!aulasPadraoContent.classList.contains("hidden")) {
-      // Aulas Padrão
-      const materia = document.getElementById("select-materia-padrao").value;
-      const horario = document.getElementById("input-horario-padrao").value;
-      const duracao = document.getElementById("select-duracao-padrao").value;
-      
-      state.selectedDays.sort((a, b) => a - b).forEach(day => {
-        state.aulas.push({
-          data: day,
-          materia: materia,
-          horario: horario,
-          duracao: duracao,
-          professor: state.manterProfessores ? 
-            (state.professores.find(p => p.materia === materia)?.nome || "A definir") : 
-            "A definir"
-        });
-      });
-    } else {
-      // Aulas Variadas
-      state.selectedDays.sort((a, b) => a - b).forEach((day, index) => {
-        const materia = document.querySelector(`.select-materia[data-index="${index}"]`)?.value;
-        const horario = document.querySelector(`.input-horario[data-index="${index}"]`)?.value;
-        const duracao = document.querySelector(`.select-duracao[data-index="${index}"]`)?.value;
-        
-        state.aulas.push({
-          data: day,
-          materia: materia,
-          horario: horario,
-          duracao: duracao,
-          professor: state.manterProfessores ? 
-            (state.professores.find(p => p.materia === materia)?.nome || "A definir") : 
-            "A definir"
-        });
-      });
-    }
-  }
-
-  // Renderizar confirmação de aulas
-  function renderConfirmacaoAulas() {
-    const container = document.getElementById("aulas-confirmacao-container");
-    container.innerHTML = "";
-    
-    state.aulas.forEach(aula => {
-      const card = document.createElement("div");
-      card.className = "bg-white rounded-lg shadow p-4";
-      card.innerHTML = `
-        <h4 class="font-semibold mb-2">${formatDate(aula.data)}</h4>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
-          <div><strong>Matéria:</strong> ${aula.materia}</div>
-          <div><strong>Horário:</strong> ${aula.horario}</div>
-          <div><strong>Duração:</strong> ${aula.duracao}</div>
-        </div>
-        ${aula.professor !== "A definir" ? `<div class="mt-2"><strong>Professor:</strong> ${aula.professor}</div>` : ''}
-      `;
-      container.appendChild(card);
-    });
   }
 
   // Gerar código único
@@ -497,7 +568,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("button-continuarContratacao").addEventListener("click", () => {
-    document.getElementById("cpf-area").classList.remove("hidden");
+    const cpfArea = document.getElementById("cpf-area");
+    cpfArea.classList.add("expanded");
   });
 
   document.getElementById("input-cpf").addEventListener("input", (e) => {
@@ -531,8 +603,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("selecao-avancar").addEventListener("click", () => {
     processarAulas();
-    fillConfirmationTable();
-    showSection(sections.calendarioConfirmacao);
+    
+    // Verificar se todas as aulas foram processadas corretamente
+    if (state.aulas.length === state.selectedDays.length) {
+      fillConfirmationTable();
+      showSection(sections.calendarioConfirmacao);
+    } else {
+      alert("Por favor, preencha todos os campos de aula corretamente.");
+    }
   });
 
   document.getElementById("confirmacao-voltar").addEventListener("click", () => {
@@ -550,8 +628,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("equipe-avancar").addEventListener("click", () => {
-    processarAulas(); // Reprocessar para incluir informações de professores
-    renderConfirmacaoAulas();
+    // Atualizar as aulas com os professores selecionados
+    state.aulas.forEach(aula => {
+      const professorSelecionado = state.professoresDB.find(p => p.materia === aula.materia);
+      if (professorSelecionado) {
+        aula.professor = professorSelecionado.nome;
+      }
+    });
+    
+    fillAulasConfirmacaoTable();
     showSection(sections.selecaoAulasConfirmacao);
   });
 
