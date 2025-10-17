@@ -1,0 +1,218 @@
+/* -------------------- VARIÁVEIS -------------------- */
+:root {
+  --orange: #f28705;
+  --black: #111827;
+  --radius: 16px;
+}
+
+/* -------------------- BASE -------------------- */
+body {
+  font-family: "Comfortaa", cursive;
+}
+
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.card-centered {
+  background: transparent;
+}
+
+.card-inner {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  min-height: 40vh;
+}
+
+.title-lexend {
+  font-family: "Lexend", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.text-comfortaa {
+  font-family: "Comfortaa", cursive;
+}
+
+/* -------------------- BOTÕES -------------------- */
+.btn-orange {
+  background: var(--orange);
+  color: #fff;
+  font-family: "Comfortaa";
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-orange:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.btn-orange:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-white {
+  background: #fff;
+  color: var(--orange);
+  border: 2px solid var(--orange);
+  font-family: "Comfortaa";
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-white:hover {
+  background: var(--orange);
+  color: #fff;
+  transform: scale(1.03);
+}
+
+.btn-white-outline {
+  background: #fff;
+  color: var(--orange);
+  border: 2px solid var(--orange);
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* -------------------- CALENDÁRIO -------------------- */
+#calendar-days > div {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+#calendar-days > div:hover {
+  background-color: rgba(242, 135, 5, 0.15);
+}
+
+#calendar-days > div.today {
+  background: var(--orange);
+  color: white;
+  transform: scale(1.05);
+}
+
+#calendar-days > div.selected {
+  border: 2px solid var(--orange);
+  box-shadow: 0 4px 10px rgba(242, 135, 5, 0.25);
+}
+
+#calendar-days > div.past {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* -------------------- TABELA -------------------- */
+.table-container table th,
+.table-container table td {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 8px;
+}
+
+/* -------------------- TRANSIÇÕES -------------------- */
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* -------------------- UTILITÁRIOS -------------------- */
+.hidden {
+  display: none !important;
+}
+
+/* -------------------- AJUSTES FINAIS -------------------- */
+#professores-columns div {
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+#professores-columns button {
+  font-size: 0.9rem;
+}
+
+.shadow {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* -------------------- BOTÕES FIXOS -------------------- */
+#botoes-fixos {
+  z-index: 40;
+}
+
+/* -------------------- MODAL -------------------- */
+#modal-repeticao {
+  z-index: 50;
+}
+
+/* -------------------- RESPONSIVIDADE -------------------- */
+@media (max-width: 640px) {
+  #calendar-days > div {
+    width: 42px;
+    height: 42px;
+    font-size: 0.85rem;
+  }
+
+  .card-inner {
+    padding: 16px;
+    min-height: 60vh;
+  }
+  
+  #botoes-fixos .flex-wrap {
+    justify-content: center;
+  }
+  
+  #botoes-fixos .btn-white {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
