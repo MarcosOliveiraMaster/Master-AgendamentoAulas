@@ -25,9 +25,11 @@
           <h2 class="title-lexend text-orange-500 text-center">Agendamento de Aulas</h2>
         </div>
         <div class="body-area flex-1 flex items-center justify-center flex-col">
-          <p class="text-comfortaa text-gray-700 text-center px-4">Aqui, texto de apresentação + instruções</p>
+          <br><p class="text-comfortaa text-gray-700 text-center px-4">Seja bem-vindo! Vamos iniciar o agendamento das próximas aulas!</p>
           <!-- Imagem centralizada entre texto e botão -->
-          <img src="https://via.placeholder.com/150x100/FFA500/FFFFFF?text=Master+Educação" alt="Master Educação" class="my-6 rounded-lg shadow-md">
+          <div class="container-img">
+            <img src="img/img-logo.png" alt="Master Educação" class="my-6 rounded-lg shadow-md" style="width: 200px; height: auto;  filter:none" />
+          </div>
         </div>
         <div class="actions-area flex items-center justify-center mb-2">
           <button id="apresentacao-avancar" class="btn-orange">Avançar</button>
@@ -38,7 +40,11 @@
     <!-- SECTION 2: Verificação -->
     <section id="section-verificacao" class="section card-centered hidden">
       <div class="card-inner transition-all duration-300 ease-in-out" style="min-height: auto;">
-        <p class="text-comfortaa text-center text-gray-800 mb-4">Texto de apresentação — redirecionamento para links</p>
+        <p class="text-comfortaa text-center text-gray-800 mb-4">Escolha uma das opções abaixo</p>
+
+        <div class="container-img">
+          <img src="img/img-login.png" alt="Master Educação" class="my-6 rounded-lg shadow-md">
+        </div>
 
         <button id="button-redirecionamento" class="btn-white-outline w-full mb-3">Minha primeira contratação</button>
         <button id="button-continuarContratacao" class="btn-orange w-full mb-3">Continuar agendamento de aulas</button>
@@ -53,7 +59,9 @@
     <section id="section-calendario" class="section card-centered hidden">
       <div class="card-inner flex flex-col h-full">
         <div class="mb-4 text-center">
-          <p class="text-comfortaa text-gray-700">Bom dia <strong id="nome-cliente-calendario">Messias</strong>!, que bom te-lo de volta! Vamos começar selecionando os dias de aulas!</p>
+          <p class="text-comfortaa text-gray-700">Que bom vê-lo de volta <strong id="nome-cliente-calendario">Messias</strong>!
+            <br>Selecione os dias que teremos aulas para conitinuarmos o ciclo de estudos <strong> da Amora!</strong>
+            </p>
         </div>
         
         <h3 class="title-lexend text-orange-500 text-center mb-4">Selecione os dias de aula</h3>
@@ -81,7 +89,7 @@
 
     <!-- SECTION 4: Seleção de Aulas -->
     <section id="section-selecaoAulas" class="section card-centered hidden">
-      <div class="card-inner transition-all duration-500 ease-in-out flex flex-col pb-32" style="min-height: auto;">
+      <div class="card-inner transition-all duration-500 ease-in-out flex flex-col" style="min-height: auto;">
         <h3 class="title-lexend text-orange-500 text-center mb-4">Selecione o tipo de agendamento</h3>
         
         <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
@@ -91,7 +99,7 @@
 
         <!-- Aulas Padrão -->
         <div id="aulas-padrao-content" class="expandable">
-          <div class="space-y-4">
+          <div class="space-y-4 mb-8">
             <select id="select-materia-padrao" class="w-full rounded-lg border px-3 py-2 text-comfortaa">
               <option value="">Selecione a matéria que iremos estudar</option>
             </select>
@@ -108,22 +116,24 @@
         </div>
 
         <!-- Aulas Variadas -->
-        <div id="aulas-variadas-content" class="expandable flex-1 overflow-hidden">
-          <div id="aulas-variadas-container" class="space-y-4 overflow-y-auto h-full pr-2 pb-4" style="max-height: 60vh;"></div>
+        <div id="aulas-variadas-content" class="expandable flex-1">
+          <div id="aulas-variadas-container" class="space-y-4 pb-32 overflow-y-auto aulas-variadas-scroll">
+            <!-- Cards de aulas variadas serão inseridos aqui -->
+          </div>
         </div>
+      </div>
 
-        <!-- Botões fixos -->
-        <div id="botoes-fixos" class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t p-4 shadow-lg z-40 transition-all duration-300 transform hidden">
-          <div class="max-w-4xl mx-auto">
-            <div id="botoes-repeticao" class="flex flex-wrap gap-2 justify-center mb-4 hidden">
-              <button id="btn-repetir-horario" class="btn-white text-sm">Repetir horário</button>
-              <button id="btn-repetir-disciplinas" class="btn-white text-sm">Repetir Disciplinas</button>
-              <button id="btn-repetir-duracao" class="btn-white text-sm">Repetir Duração</button>
-            </div>
-            <div class="flex gap-4 justify-center">
-              <button id="selecao-voltar" class="btn-white">Voltar</button>
-              <button id="selecao-avancar" class="btn-orange disabled:opacity-50" disabled>Avançar</button>
-            </div>
+      <!-- Botões fixos -->
+      <div id="botoes-fixos" class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t p-4 shadow-lg z-40 transition-all duration-300 transform hidden">
+        <div class="max-w-4xl mx-auto">
+          <div id="botoes-repeticao" class="flex flex-wrap gap-2 justify-center mb-4 hidden">
+            <button id="btn-repetir-horario" class="btn-white text-sm">Repetir horário</button>
+            <button id="btn-repetir-disciplinas" class="btn-white text-sm">Repetir Disciplinas</button>
+            <button id="btn-repetir-duracao" class="btn-white text-sm">Repetir Duração</button>
+          </div>
+          <div class="flex gap-4 justify-center">
+            <button id="selecao-voltar" class="btn-white">Voltar</button>
+            <button id="selecao-avancar" class="btn-orange disabled:opacity-50" disabled>Avançar</button>
           </div>
         </div>
       </div>
@@ -134,7 +144,8 @@
       <div class="card-inner w-full">
         <div class="bg-white rounded-xl shadow p-4 mb-4">
           <p id="welcome-card" class="text-comfortaa text-gray-800 text-center">
-            Seja bem-vindo de volta <strong id="nomeCliente">Messias</strong>! Que bom vê-lo por aqui! Vamos revisar seu novo cronograma.
+            Para corrigir alguma informação do cronograma, clique em <strong">Voltar</strong>
+            <br> Clique em <strong>Avançar</strong> para escolher os professores que irão te atender .
           </p>
         </div>
 
@@ -213,16 +224,20 @@
     <!-- SECTION 8: Termos -->
     <section id="section-termos" class="section card-centered hidden px-4 py-6">
       <div class="card-inner">
+        <p class="text-comfortaa text-gray-800"><strong>Falta pouco para concluirmos o agendamento das aulas</strong>
+           
         <!-- Imagem centralizada acima das checkboxes -->
-        <img src="https://via.placeholder.com/150x100/FFA500/FFFFFF?text=Termos+de+Uso" alt="Termos de Uso" class="mx-auto mb-6 rounded-lg shadow-md">
-        
+        <div class="container-img">
+          <img src="img/img-celebrate.png" alt="Master Educação" class="my-6 rounded-lg shadow-md">
+        </div>
+
+
+
         <label class="flex items-center gap-2">
           <input type="checkbox" id="termo-uso" />
           <a href="https://google.com" target="_blank" class="text-orange-500">Estou de acordo com os termos de uso</a>
         </label>
         
-        <!-- Imagem antes da segunda label -->
-        <img src="https://via.placeholder.com/150x100/FFA500/FFFFFF?text=Privacidade" alt="Privacidade" class="mx-auto my-4 rounded-lg shadow-md">
         
         <label class="flex items-center gap-2 mt-3">
           <input type="checkbox" id="termo-privacidade" />
@@ -239,7 +254,13 @@
     <!-- SECTION 9: Fim -->
     <section id="section-fim" class="section card-centered hidden px-4 py-6">
       <div class="card-inner text-center">
-        <p class="text-comfortaa text-gray-800">Obrigado por concluir nosso cadastro! (Redirecionamento temporariamente desativado)</p>
+        <p class="text-comfortaa text-gray-800"><strong>Obrigado por concluir nosso agendamento de aulas!</strong>
+  
+          <br>Vamos te redirecionar para o whatsapp em alguns instantes para continuar seu atendimento</p>
+
+        <div class="container-img">
+          <img src="img/img-conclusao.png" alt="Master Educação" class="my-6 rounded-lg shadow-md">
+        </div>
       </div>
     </section>
   </main>

@@ -340,10 +340,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
     verificarCamposPreenchidos();
     
-    // Ajustar scroll automaticamente
+    // Scroll automático para o último card no container das aulas variadas
     setTimeout(() => {
-      container.scrollTop = 0;
-    }, 100);
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, 300);
   }
 
   function repetirHorario() {
