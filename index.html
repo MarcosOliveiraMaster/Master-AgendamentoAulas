@@ -47,7 +47,7 @@
         </div>
 
         <button id="button-redirecionamento" class="btn-white-outline w-full mb-3">Minha primeira contratação</button>
-        <button id="button-continuarContratacao" class="btn-orange w-full mb-3">Continuar agendamento de aulas</button>
+        <button id="button-continuarContratacao" class="btn-orange w-full mb-3"> Já sou parceiro Master</button>
 
         <div id="cpf-area" class="expandable">
           <input id="input-cpf" maxlength="14" placeholder="Digite seu CPF" class="w-full rounded-lg border px-3 py-2 text-comfortaa mt-3" />
@@ -93,8 +93,8 @@
         <h3 class="title-lexend text-orange-500 text-center mb-4">Selecione o tipo de agendamento</h3>
         
         <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
-          <button id="button-AulasPadrao" class="btn-white shadow flex-1">Gostaria de agendar uma única disciplina repetindo o mesmo horário</button>
-          <button id="button-AulasVariadas" class="btn-white shadow flex-1">Gostaria de agendar várias disciplinas diferentes</button>
+          <button id="button-AulasPadrao" class="btn-white shadow flex-1">Gostaria de agendar <strong>uma única matéria</strong> </button>
+          <button id="button-AulasVariadas" class="btn-white shadow flex-1">Gostaria de agendar <strong>mais de uma matéria </strong> </button>
         </div>
 
         <!-- Aulas Padrão -->
@@ -105,7 +105,9 @@
             </select>
             <input id="input-horario-padrao" type="time" class="w-full rounded-lg border px-3 py-2 text-comfortaa">
             <select id="select-duracao-padrao" class="w-full rounded-lg border px-3 py-2 text-comfortaa">
-              <option value="">Selecione</option>
+              <option value="" disabled selected>Selecione a duração das aulas</option>
+              <!--
+              <option value="">Selecione</option> -->
               <option value="1h">1h</option>
               <option value="1h30">1h30</option>
               <option value="2h">2h</option>
@@ -144,7 +146,7 @@
       <div class="card-inner w-full">
         <div class="bg-white rounded-xl shadow p-4 mb-4">
           <p id="welcome-card" class="text-comfortaa text-gray-800 text-center">
-            Para corrigir alguma informação do cronograma, clique em <strong">Voltar</strong>
+            Para corrigir alguma informação do cronograma, clique em <strong>Voltar</strong>
             <br> Clique em <strong>Avançar</strong> para escolher os professores que irão te atender .
           </p>
         </div>
@@ -180,7 +182,7 @@
         </div>
 
         <div id="professores-info" class="expandable mb-4 text-center text-sm text-gray-600">
-          <p>Estes são os professores que ensinaram <strong>Amora</strong>.<br>Clique em avançar para mantermos os professores ou clicar no x para trocar algum professor específico.</p>
+          <p>Estes são os professores que ensinaram <strong>Amora</strong>.<br>Clique em avançar para mantermos os professores ou clicar no <strong>X</strong> para trocar algum professor específico.</p>
         </div>
 
         <div id="professores-lista" class="expandable bg-white rounded-xl shadow p-4">
