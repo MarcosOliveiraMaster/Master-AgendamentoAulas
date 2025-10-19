@@ -657,92 +657,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Atualização Envio de Dados para Planilha Teste Final
-  // Código Novo - Versão 02:
-  // Salve a URL que você obteve no Passo 2 aqui
-  const ENDPOINT_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyrCCmY7VZ-owG9xVglqXsoeJkA8r86XgZ9xcbzv_Wm_bBVoNKyKzoi7WSxgEAGLBpw/exec'; 
-
-  document.getElementById("termos-avancar").addEventListener("click", async () => {
+  
+  // Cógido Antigo - Backup
+  document.getElementById("termos-avancar").addEventListener("click", () => {
     const codigo = gerarCodigo();
     
     console.log("CPF:", state.cpf);
     console.log("Cod:", codigo);
     console.log("Dados Cronograma:");
-
-    // 1. Mapear e formatar os dados de aula para o formato que o Apps Script espera
-    const dadosParaEnvio = state.aulas.map(aula => {
-        // Formatar a data para DD/MM/AAAA para facilitar a inserção no Sheets
-        const dataFormatada = aula.data.toLocaleDateString('pt-BR');
-        
-        console.log(`${dataFormatada}, ${aula.horario}, ${aula.duracao}, ${aula.materia}, ${aula.professor}`);
-
-        // Retornar um objeto formatado para o backend (Apps Script)
-        return {
-            data: dataFormatada,
-            horario: aula.horario,
-            duracao: aula.duracao,
-            materia: aula.materia,
-            professor: aula.professor // Usado como 'Disciplina' na coluna G
-        };
+    
+    state.aulas.forEach(aula => {
+      const dataFormatada = aula.data.toISOString().split('T')[0];
+      console.log(`${dataFormatada}, ${aula.horario}, ${aula.duracao}, ${aula.materia}, ${aula.professor}`);
     });
     
-    // Objeto final a ser enviado ao Apps Script
-    const payload = {
-        codigo: codigo,
-        aulas: dadosParaEnvio
-    };
-    
-    // 2. Enviar os dados usando Fetch API (Requisição POST)
-    try {
-        const response = await fetch(ENDPOINT_APPS_SCRIPT, {
-            method: 'POST',
-            mode: 'cors', // Necessário para requisições cross-origin
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        // Tenta ler o JSON de resposta (se o Apps Script retornar algo)
-        let result;
-        try {
-            result = await response.json();
-        } catch (e) {
-             // Pode ocorrer se o Apps Script retornar texto simples ou erro não JSON
-             result = { result: "SUCESSO", message: "Resposta do Apps Script sem JSON. Assumindo sucesso." };
-        }
-
-        if (result.result === "SUCESSO") {
-            console.log("Dados salvos na planilha com sucesso!");
-            console.log(result.message);
-        } else {
-            console.error("Erro ao salvar os dados na planilha:", result.message);
-            alert("Houve um erro ao finalizar o agendamento. Detalhes no console.");
-        }
-
-    } catch (error) {
-        console.error("Erro na requisição para o Apps Script:", error);
-        alert("Erro de conexão ao salvar os dados. Verifique sua rede e a URL do Apps Script.");
-    }
-
-    // 3. Finalizar a jornada do usuário
     showSection(sections.fim);
   });
-  // Cógido Antigo - Backup
-  // document.getElementById("termos-avancar").addEventListener("click", () => {
-  //   const codigo = gerarCodigo();
-    
-  //   console.log("CPF:", state.cpf);
-  //   console.log("Cod:", codigo);
-  //   console.log("Dados Cronograma:");
-    
-  //   state.aulas.forEach(aula => {
-  //     const dataFormatada = aula.data.toISOString().split('T')[0];
-  //     console.log(`${dataFormatada}, ${aula.horario}, ${aula.duracao}, ${aula.materia}, ${aula.professor}`);
-  //   });
-    
-  //   showSection(sections.fim);
-  // });
 
 
 
