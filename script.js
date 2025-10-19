@@ -657,7 +657,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Atualização Envio de Dados para Planilha Teste Final
-  // Código Novo:
+  // Código Novo - Versão 02:
   // Salve a URL que você obteve no Passo 2 aqui
   const ENDPOINT_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyrCCmY7VZ-owG9xVglqXsoeJkA8r86XgZ9xcbzv_Wm_bBVoNKyKzoi7WSxgEAGLBpw/exec'; 
 
